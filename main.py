@@ -19,8 +19,8 @@ def highlight_area(img, region, factor=1.5, outline_color=None, outline_width=6,
     img = img.copy()  # Avoid changing original image.
     img_crop = img.crop(region)
 
-    brightner = ImageEnhance.Brightness(img_crop)
-    img_crop = brightner.enhance(factor)
+    brightener = ImageEnhance.Brightness(img_crop)
+    img_crop = brightener.enhance(factor)
 
     img.paste(img_crop, region)
 
@@ -73,10 +73,14 @@ def darken_out_of_bounds(img, hold_coords, factor=0.3):
 
     for region in (region_left, region_right):
         img_crop = img.crop(region)
-
-        brightner = ImageEnhance.Brightness(img_crop)
-        img_crop = brightner.enhance(factor)
-
+        brightener = ImageEnhance.Brightness(img_crop)
+        img_crop = brightener.enhance(factor)
+        #ADDED COMPRESSION, TEST
+        try:
+            img_crop = img_crop.resize((img_crop.width * 1// 4, img_crop.height * 1 // 4), Image.LANCZOS)
+            img_crop = img_crop.resize((region[2] - region[0], region[3] - region[1]), Image.LANCZOS)
+        except ValueError:
+            print("No downsizing darkening due to out of bounds.")
         img.paste(img_crop, region)
 
     return img
@@ -192,14 +196,17 @@ def highlight_route(route, img=BASE_IMG, regenerate=False, save=False, darken=Tr
                 outline_color=COLOURS[colour],
                 label=str(hold),
             )
+        print("Generation of " + route + " finished.")
 
         # Highlight section of wall
         if darken:
             img = darken_out_of_bounds(img, [coord for _, coord, _ in holds])
+            print("Darkening of " + route + " finished.")
 
         # Save img
         if save:
             img.save(file_loc)
+            print("Saving of " + route + " finished.")
     else:
         img = Image.open(file_loc)
 
@@ -249,8 +256,8 @@ def compress_route(route, base=BASE_IMG):
         img = Image.open(file_loc)
 
         img = img.resize((img.width * 3// 4, img.height * 3 // 4), Image.LANCZOS)
-
-        img.save(file_dest, optimize = True, quality = 75)
+        #Was 75 before changes, need to go under 500mb
+        img.save(file_dest, optimize = True, quality = 60)
 
 
 def list_holds():
