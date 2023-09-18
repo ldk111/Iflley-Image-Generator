@@ -537,4 +537,16 @@ routes = {
     "The Ultimate Everything": (6, "23A", 50, "78A", 29, "88B", 32, "84A", "113B"),
     "The Blair Bitch Project": (6, 7, 25, 49, "73A", 105),
     "The Magic Carpet Ride": (34, 32, "85B", "113A", 55, "109C", "109B", "77A", "107A"),  # (no chips)
+    "Easy Ladder": ((2, 17, 43, 44), 16, 18, 63, 64, 46, 96, 98, 99),
+    "Traverse": (("arete", 1, 39), 40, 41, 42, 43, 2, 15, 16, 17, 44, 64, 46, 66),
+    "Twisted Ladder": ((7, 26, 28, 51), 52, 77, 75, 108, 105),
+    "Severely Unimpressed": ((11, "arete", 58), 36, 34, 87, 85, 115, 114),
+    "Girdering for Beginners": ((7, 28, 51, 77), 75, 108, 105, 50, "girder", 103),
+    "Sideways": ((20, 70), 67, 21, 69, 46, 102, 65),
+    "Rock Over": ((32, 85, 34), 81, 112),
+    "Press": ((1, 39, 14, 40), 15, 41, 42, 61, "girder"),
+    "Dobsons Reach": ((34, 36, 58), 87, 85, 35, "girder", 114),
+    "Sit Start for Beginners": (9, 10, 30, 32, 55, 83, 81, 112),
+    "Five Finger Discount": ((7, 29, 53, "77B"), 28, 82, 109, 76),
+    "Lock, Slot, and Two Smoking Barrels": ((1, "arete", 40), 14, 15, 41, 60, 61, 95, 94)
 }

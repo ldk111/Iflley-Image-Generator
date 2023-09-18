@@ -85,6 +85,17 @@ def darken_out_of_bounds(img, hold_coords, factor=0.3):
 
     return img
 
+def remove_out_of_bounds(img, hold_coords):
+
+    left = min([c[0] for c in hold_coords]) - 200
+    right = max([c[2] for c in hold_coords]) + 200
+
+    img = img.copy()
+
+    img_crop = img.crop((max(left, 0), 0, min(right, img.width), img.height))
+
+    return img_crop
+
 
 # Hold location tools
 def get_center_x(hold):
@@ -181,9 +192,9 @@ def get_clean_holds(route):
 
 
 # High level helper funcs
-def highlight_route(route, img=BASE_IMG, regenerate=False, save=False, darken=True):
+def highlight_route(route, img=BASE_IMG, regenerate=False, save=False, darken=True, remove_background=False, suffix=""):
     # Avoid regenerating route if already cached.
-    file_loc = Path(f".assets/img/routes/{clean_file_name(route)}.png")
+    file_loc = Path(f".assets/img/routes/{clean_file_name(route)+suffix}.png")
 
     if regenerate or not file_loc.is_file():
         holds = get_clean_holds(route)
@@ -199,9 +210,12 @@ def highlight_route(route, img=BASE_IMG, regenerate=False, save=False, darken=Tr
         print("Generation of " + route + " finished.")
 
         # Highlight section of wall
-        if darken:
+        if darken and remove_background == False:
             img = darken_out_of_bounds(img, [coord for _, coord, _ in holds])
             print("Darkening of " + route + " finished.")
+        if remove_background:
+            img = remove_out_of_bounds(img, [coord for _, coord, _ in holds])
+            print("Removing background of " + route + " finished.")
 
         # Save img
         if save:
@@ -236,12 +250,12 @@ def highlight_holds(holds, img=BASE_IMG, darken=True):
     return img
 
 
-def cache_routes(img=BASE_IMG, regenerate=False, compress=True):
+def cache_routes(img=BASE_IMG, regenerate=False, compress=True, remove_background = False, suffix=""):
     for route in ROUTES:
-        file_loc = Path(f".assets/img/routes/{clean_file_name(route)}.png")
+        file_loc = Path(f".assets/img/routes/{clean_file_name(route)+suffix}.png")
         if regenerate or not file_loc.is_file():
             print(f"Generating: {route}")
-            curr_img = highlight_route(route, img, regenerate=True, save=True)
+            curr_img = highlight_route(route, img, remove_background=remove_background, suffix=suffix, regenerate=True, save=True)
             if compress:
                 curr_img = curr_img.resize(
                     (curr_img.width // 2, curr_img.height // 2), Image.LANCZOS
@@ -250,9 +264,9 @@ def cache_routes(img=BASE_IMG, regenerate=False, compress=True):
             else:
                 curr_img.save(file_loc)
 
-def compress_route(route, base=BASE_IMG):
-        file_loc = Path(f".assets/img/routes/{clean_file_name(route)}.png")
-        file_dest = Path(f".assets/img/comp/{clean_file_name(route)}.png")
+def compress_route(route, base=BASE_IMG, suffix=""):
+        file_loc = Path(f".assets/img/routes/{clean_file_name(route)+ suffix}.png")
+        file_dest = Path(f".assets/img/comp/{clean_file_name(route)+ suffix}.png")
         img = Image.open(file_loc)
 
         img = img.resize((img.width * 3// 4, img.height * 3 // 4), Image.LANCZOS)

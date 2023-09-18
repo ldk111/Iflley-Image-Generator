@@ -16,8 +16,8 @@ import main
 #main.highlight_route("The Bat", regenerate=True, save=True)
 #main.highlight_route("Dyno 8", regenerate=True, save=True)
 
-#main.cache_routes()
+main.cache_routes(regenerate = False, remove_background=True, suffix="_test")
 
 for route in main.ROUTES:
     print("Compressing route " + route)
-    main.compress_route(route)
+    main.compress_route(route, suffix="_test")
