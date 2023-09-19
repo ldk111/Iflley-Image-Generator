@@ -279,7 +279,7 @@ routes = {
     "The Sword": (10, 33, "85A", "114A"),
     "Slap Up Dinner": (24, 25, 26, "75B", "107A"),
     "Tom's Extension": ((4, 47), 5, 49, 6, 25, 24, 7, 28, 54, 30),
-    "Hebrews 5.10": (2, 16, 17, 64, 46, "99B"),  # 46 (feet only)
+    "Hebrews 5.10": (2, 16, 17, "64A", 46, "99B"),  # 46 (feet only)
     "The Other Unnamed Problem": (4, "19A", 66, 17, "64A", "15C", "61B"),
     "Crappy Fun Ball": ("4B", 19, "48B", "67A", 69, "99B"),
     "PARA": (35, 36, 37, "85A", 81, "112A"),
