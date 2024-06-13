@@ -293,29 +293,3 @@ def list_routes_containing(hold):
 def list_stand_starts():
     route_list = [route for route in ROUTES if isinstance(ROUTES[route][0], tuple)]
     return route_list
-
-
-def create_topos_df():
-    route_names = list(ROUTES.keys())
-    img_locs = [
-        f"![{route}](https://github.com/iacobo/iffley-wall-app/blob/main/.assets/img/routes/{clean_file_name(route)}.png?raw=true)"
-        for route in route_names
-    ]
-    df = pd.DataFrame(zip(route_names, img_locs), columns=["Name", "Topo"])
-    return df
-
-### Index
-
-"""
-    for circuit in routelists.keys():
-        md += f"- [{circuit}](#{circuit.lower().replace(' ','-').replace(':','')})\n"
-    for circuit, routes in routelists.items():
-        img_locs = [
-            f"![{route}](https://github.com/iacobo/iffley-wall-app/blob/main/.assets/img/routes/{clean_file_name(route)}.png?raw=true)"
-            for route in routes
-        ]
-        df = pd.DataFrame(zip(routes, img_locs), columns=["Name", "Topo"])
-        md = (
-            md
-            + f"""
-### {circuit}
